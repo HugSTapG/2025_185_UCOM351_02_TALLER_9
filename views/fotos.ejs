@@ -17,6 +17,7 @@
                         <th>Id</th>
                         <th>Título</th>
                         <th>Descripción</th>
+                        <th>Etiqueta</th>
                         <th>Ruta</th>
                         <th>Fecha de creación</th>
                     </tr>
@@ -27,6 +28,7 @@
                         <td><%= foto.id %></td>
                         <td><%= foto.titulo %></td>
                         <td><%= foto.descripcion %></td>
+                        <td><%= foto.etiqueta.map(e => e.texto).join(", ") %></td>
                         <td><%= foto.ruta %></td>
                         <td><%=
                             foto.createdAt.toLocaleDateString('en-US')
