@@ -9,7 +9,6 @@ const Etiqueta = require('../models').etiqueta;
 // @ts-ignore
 router.get('/findAll/json', function (req, res, next) {
 
-
     Foto.findAll({
         attributes: { exclude: ["updatedAt"] },
         include: [{
@@ -27,6 +26,11 @@ router.get('/findAll/json', function (req, res, next) {
 
 // @ts-ignore
 router.get('/findAll/view', function (req, res, next) {
+    // @ts-ignore
+    const baja = parseFloat(req.query.c_baja);
+    // @ts-ignore
+    const alta = parseFloat(req.query.c_alta);
+
     Foto.findAll({
         attributes: { exclude: ["updatedAt"] },
         include: [{
@@ -34,11 +38,17 @@ router.get('/findAll/view', function (req, res, next) {
             attributes: ['texto'],
             through: { attributes: [] }
         }],
+        where: {
+            calificacion: {
+                [Op.between]: [baja, alta]
+            }
+        }
     })
         .then(fotos => {
-            res.render('fotos', { title: 'Fotos', arrFotos: fotos });
+            res.render('search', { title: 'Search', arrFotos: fotos });
         })
-        .catch(error => res.status(400).send(error))
+        .catch(error =>
+            res.status(400).send(error))
 });
 
 // @ts-ignore
@@ -71,6 +81,7 @@ router.get('/findAllByRate/json', function (req, res, next) {
             res.status(400).send(error))
 });
 
+// @ts-ignore
 router.get('/findAllById/:id/json', function (req, res, next) {
 
     let id = parseInt(req.params.id);
