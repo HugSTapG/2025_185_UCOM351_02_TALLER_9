@@ -10,6 +10,8 @@ let usersRouter = require('./routes/users');
 let fotosRouter = require('./routes/fotos');
 let searchRouter = require('./routes/search');
 
+let restRouter = require('./rest/fotos');
+
 let app = express();
 
 // view engine setup
@@ -26,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/fotos', fotosRouter);
 app.use('/search', searchRouter);
+app.use('/rest', restRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
